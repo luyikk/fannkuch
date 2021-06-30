@@ -74,7 +74,6 @@ checksum = "e78d4f1cc4ae33bbfc157ed5d5a5ef3bc29227303d595861deb238fcec4e9457"
 name = "fannkuch"
 version = "0.1.0"
 dependencies = [
- "lazy_static",
  "packed_simd_2",
  "rayon-cond",
 ]
