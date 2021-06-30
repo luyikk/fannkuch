@@ -130,7 +130,7 @@ fn main() {
     let n = std::env::args()
         .nth(1)
         .and_then(|n| n.parse().ok())
-        .unwrap_or(12);
+        .unwrap_or(7);
 
     let factorials = compute_factorials(n);
     let perm_max = factorials[n as usize] as usize;
