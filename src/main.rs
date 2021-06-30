@@ -64,20 +64,15 @@ pub fn increment_permutation(count: &mut [u32; MAX_N], mask_shift:&[__m128i;16],
         let mut i = 1;
         loop {
             current = _mm_shuffle_epi8(current, mask_shift[i]);
-            count[i] += 1;
+            *count.get_unchecked_mut(i) += 1;
             if count[i] <= i as u32 {
                 break;
             }
-            count[i] = 0;
+            *count.get_unchecked_mut(i) = 0;
             i += 1;
         }
         current
     }
-}
-
-#[inline(always)]
-fn reverse(x: __m128i, idx: usize,maks_reverse:&[__m128i;16]) -> __m128i {
-    unsafe { _mm_shuffle_epi8(x, maks_reverse[idx]) }
 }
 
 
@@ -153,7 +148,7 @@ fn main() {
                     let mut flips = 0;
                     let mut next = std::mem::transmute::<__m128i, [u8; 16]>(current)[first];
                     while next != 0 {
-                        current = reverse(current, first,&masks_reverse);
+                        current = _mm_shuffle_epi8(current, masks_reverse[first]);
                         first = next as usize;
                         next = std::mem::transmute::<__m128i, [u8; 16]>(current)[first];
                         flips += 1;
