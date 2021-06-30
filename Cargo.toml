@@ -9,6 +9,7 @@ edition = "2018"
 packed_simd_2 = { version = "0.3.4"}
 rayon = "1.5"
 
+
 [profile.release]
 lto = "fat"
 codegen-units = 1

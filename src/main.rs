@@ -62,13 +62,15 @@ pub fn create_count_current(
 pub fn increment_permutation(count: &mut [u32; MAX_N], mask_shift:&[__m128i;16], mut current: __m128i) -> __m128i {
     unsafe {
         let mut i = 1;
+        let count_p:*mut u32=count as *mut u32;
         loop {
             current = _mm_shuffle_epi8(current, mask_shift[i]);
-            *count.get_unchecked_mut(i) += 1;
-            if count[i] <= i as u32 {
+            let ptr= count_p.offset(i as isize);
+            ptr.write(ptr.read()+1);
+            if ptr.read() <= i as u32 {
                 break;
             }
-            *count.get_unchecked_mut(i) = 0;
+            ptr.write(0);
             i += 1;
         }
         current
