@@ -168,8 +168,7 @@ fn main() {
             }
 
             CHECKSUM.fetch_add(checksum,Ordering::Release);
-            let check_flips=MAX_FLIPS.load(Ordering::Acquire);
-            if max_flips>check_flips {
+            if max_flips>MAX_FLIPS.load(Ordering::Acquire) {
                 MAX_FLIPS.store(max_flips, Ordering::Release);
             }
         }
