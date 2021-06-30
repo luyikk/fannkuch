@@ -1,10 +1,10 @@
 extern crate  packed_simd_2;
-extern crate rayon_cond;
+extern crate rayon;
 
 use std::arch::x86_64::{
     __m128i, _mm_extract_epi8, _mm_load_si128, _mm_setr_epi8, _mm_shuffle_epi8,
 };
-use rayon_cond::CondIterator;
+use rayon::prelude::*;
 use std::sync::atomic::{AtomicI32, Ordering};
 
 const MAX_N: usize = 16;
@@ -136,7 +136,7 @@ fn main() {
     let perm_max = factorials[n as usize] as usize;
     let (blocks, block_size) = get_blocks_and_size(perm_max);
 
-    CondIterator::new(0..blocks,true).for_each(|i_block|{
+    (0..blocks).into_par_iter().for_each(|i_block|{
         let block_start = i_block * block_size;
         let masks_reverse = masks_reverse.clone();
         let masks_shift = masks_shift.clone();

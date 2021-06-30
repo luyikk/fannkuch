@@ -7,7 +7,7 @@ edition = "2018"
 
 [dependencies]
 packed_simd_2 = { version = "0.3.4"}
-rayon-cond = "0.2.0"
+rayon = "1.5"
 
 [profile.release]
 lto = "fat"
